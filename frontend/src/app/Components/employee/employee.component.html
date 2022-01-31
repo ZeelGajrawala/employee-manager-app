@@ -1,0 +1,99 @@
+<div class="employee mt-5 mb-5">
+	<div class="row">
+		<div class="col-md-3 mb-5" *ngFor="let emp of employee">
+			<div class="card-container p-3">
+				<!-- <span class="pro">PRO</span> -->
+				<!-- <img class="round" src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" /> -->
+				<h3 class="p-1">{{emp.name}}</h3>
+				<h6>{{emp.position}}</h6>
+				<p class="p-1">{{emp.dept}}</p>
+				<div class="buttons">
+					<button 
+						class="primary m-1"
+						data-bs-toggle="modal"
+        		data-bs-target="#exampleModal"
+            (click)="editEmployee(emp)"
+					>
+						Edit
+					</button>
+					<button class="primary ghost m-1" (click)="deleteEmployees(emp._id)">
+						Delete
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{editModal ? 'Update' : 'Add'}} Employee</h5>
+        <button
+          type="button"
+          class="btn-close m-1"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="editmodaloff()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="employeesform">
+          <div class="mb-3">
+            <label for="name" class="form-label"
+              >Employee Name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              placeholder="Enter Your Name"
+              formControlName="name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="position" class="form-label"
+              >Employee Position</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="position"
+              name="position"
+              placeholder="Enter Your Position"
+              formControlName="position"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="position" class="form-label"
+              >Employee Department</label
+            >
+            <select class="form-select" id="dept" name="dept" formControlName="dept">
+              <option value="Designer">Designer</option>
+              <option value="Web Development">Web Development</option>
+              <option value="HR">HR</option>
+              <option value="Manager">Manager</option>
+              <option value="App Development">App Development</option>
+            </select>
+          </div>
+        </form>
+        <p>{{employeesform.status}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="primary ghost" data-bs-dismiss="modal" (click)="editmodaloff()">
+          Cancel
+        </button>
+        <button type="button" (click)="employeedata()" class="primary" data-bs-dismiss="modal" [disabled]="!employeesform.valid">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
